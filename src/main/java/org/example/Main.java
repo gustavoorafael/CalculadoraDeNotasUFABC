@@ -1,19 +1,44 @@
 package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.ArrayList;
+import java.util.List;
 public class Main {
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        int[] pesosContainers = {15, 13, 11, 10, 9, 8, 4, 2, 2, 1};
+        int capacidadeCaminhao = 25;
+        List<List<Integer>> caminhoes = new ArrayList<>();
+        for (int peso : pesosContainers) {
+            boolean adicionado = false;
+            for (int i = 0; i < caminhoes.size(); i++) {
+                List<Integer> caminhao = caminhoes.get(i);
+                int pesoAtual = 0;
+                for (int p : caminhao) {
+                    pesoAtual += p;
+                }
+                if (pesoAtual + peso <= capacidadeCaminhao) {
+                    caminhao.add(peso);
+                    adicionado = true;
+                    break;
+                }
+            }
+            if (!adicionado) {
+                List<Integer> novoCaminhao = new ArrayList<>();
+                novoCaminhao.add(peso);
+                caminhoes.add(novoCaminhao);
+            }
+        }
+        for (int i = 0; i < caminhoes.size(); i++) {
+            List<Integer> caminhao = caminhoes.get(i);
+            int pesoTotal = 0;
+            StringBuilder pesoIndividual = new StringBuilder();
+            for (int peso : caminhao) {
+                pesoTotal += peso;
+                pesoIndividual.append(peso).append(" + ");
+            }
+            pesoIndividual.setLength(pesoIndividual.length() - 3);
+            System.out.println("Caminhão " + (i + 1) + ": " + pesoIndividual + " = " + pesoTotal + " toneladas");
         }
     }
 }
+
+
